@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>InstaFetch — Download from Instagram</title>
+  <meta name="description" content="InstaFetch — Premium Instagram media downloader. Fetch Reels, Photos, and Stories instantly in high quality." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,700;1,800&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="/frontend/css/style.css" />
+</head>
+<body>
+
+  <!-- Ambient background orbs -->
+  <div class="ambient" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <div class="noise"></div>
+  </div>
+
+  <!-- ===== NAVBAR ===== -->
+  <nav class="nav" id="nav">
+    <a href="/" class="nav__logo">InstaFetch</a>
+
+    <ul class="nav__links">
+      <li><a href="#" class="nav__link active">Video</a></li>
+      <li><a href="#" class="nav__link">Photo</a></li>
+      <li><a href="#" class="nav__link">Reel</a></li>
+      <li><a href="#" class="nav__link">Story</a></li>
+    </ul>
+
+    <a href="#download-module" class="nav__cta">Get Started</a>
+  </nav>
+
+  <main>
+    <!-- ===== HERO ===== -->
+    <section class="hero" id="hero">
+      <h1 class="hero__title">
+        Download from
+        <span class="hero__title--gradient">Instagram</span>
+      </h1>
+
+      <p class="hero__sub">
+        Experience the magic of instant media transformation. High-quality
+        downloads for Reels, Photos, and Stories in a single click.
+      </p>
+
+      <!-- ===== DOWNLOAD MODULE (inline with hero) ===== -->
+      <div class="download-row" id="download-module">
+        <div class="input-wrap">
+          <!-- Instagram icon -->
+          <svg class="input-icon" viewBox="0 0 24 24" fill="none">
+            <rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" stroke-width="1.8"/>
+            <circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="1.8"/>
+            <circle cx="17.5" cy="6.5" r="1.2" fill="currentColor"/>
+          </svg>
+          <input
+            type="url"
+            id="insta-link"
+            class="input-field"
+            placeholder="Paste URL here…"
+            autocomplete="off"
+            spellcheck="false"
+          />
+        </div>
+
+        <button class="btn-download-main" id="btn-fetch" onclick="fetchMedia()">
+          <span class="btn-text">Download</span>
+          <svg class="btn-arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="4" y1="10" x2="16" y2="10"/>
+            <polyline points="11 5 16 10 11 15"/>
+          </svg>
+          <span class="btn-loader" id="btn-loader">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <circle cx="12" cy="12" r="10" stroke-dasharray="31.4 31.4" stroke-linecap="round"/>
+            </svg>
+          </span>
+        </button>
+      </div>
+
+      <!-- Feature chips -->
+      <div class="chips">
+        <span class="chip">⚡ AI Quality</span>
+        <span class="chip">🚫 No Watermark</span>
+        <span class="chip">🎁 Free Forever</span>
+      </div>
+
+      <!-- Status message -->
+      <p class="status-msg" id="status-msg"></p>
+    </section>
+
+    <!-- ===== PREVIEW SECTION ===== -->
+    <section class="preview" id="preview">
+      <div class="preview__card" id="preview-card">
+        <div class="preview__media">
+          <video id="preview-video" controls playsinline></video>
+          <img id="preview-image" alt="Instagram media preview" />
+        </div>
+
+        <a class="btn-save" id="btn-save">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          Save to Device
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Minimal footer -->
+  <footer class="foot">
+    <span class="foot__brand">InstaFetch</span>
+    <span class="foot__sep">·</span>
+    <span>Crafted for the media obsessed</span>
+  </footer>
+
+  <script src="/frontend/js/script.js"></script>
+</body>
+</html>
