@@ -3,134 +3,344 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Instagram Video Downloader (HD, No Watermark) - InstaFetch</title>
+  <title>InstaFetch — Download Instagram Content Instantly</title>
+  <meta name="description" content="Download Instagram reels, videos, and photos in HD. Fast, secure, no login required." />
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="InstaFetch" />
 
-<meta name="description" content="Download Instagram videos, reels, and photos instantly in HD without watermark. Fast, free & secure Instagram downloader.">
-
-<meta name="keywords" content="instagram video downloader, reel downloader, download instagram reels, instagram downloader hd">
-
-<meta name="robots" content="index, follow">
-<meta name="author" content="InstaFetch">
-
-<meta property="og:title" content="InstaFetch - Instagram Video Downloader (HD)">
-<meta property="og:description" content="Download Instagram reels, videos & photos instantly without watermark. Fast & free.">
-<meta property="og:image" content="https://yourdomain.onrender.com/logo.png">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://instafetch-pl53.onrender.com">
-
-  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,700;1,800&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;0,14..32,800&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="/css/style.css" />
 </head>
 <body>
-
-  <!-- Ambient background orbs -->
-  <div class="ambient" aria-hidden="true">
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
-    <div class="orb orb-3"></div>
-    <div class="noise"></div>
+  <div class="bg-blobs" aria-hidden="true">
+    <div class="bg-blobs__blob bg-blobs__blob--1"></div>
+    <div class="bg-blobs__blob bg-blobs__blob--2"></div>
+    <div class="bg-blobs__blob bg-blobs__blob--3"></div>
   </div>
 
-  <!-- ===== NAVBAR ===== -->
-  <nav class="nav" id="nav">
-    <a href="/" class="nav__logo">InstaFetch</a>
+  <header class="site-header">
+    <nav class="nav" id="nav" aria-label="Main navigation">
+      <a href="#hero" class="nav__logo">InstaFetch</a>
 
-    <ul class="nav__links">
-      <li><a href="#" class="nav__link active">Video</a></li>
-      <li><a href="#" class="nav__link">Photo</a></li>
-      <li><a href="#" class="nav__link">Reel</a></li>
-      <li><a href="#" class="nav__link">Story</a></li>
-    </ul>
+      <ul class="nav__links" role="list">
+        <li><a href="#hero" class="nav__link">Home</a></li>
+        <li><a href="#fetch-engine" class="nav__link">Features</a></li>
+        <li><a href="#how-it-works" class="nav__link">How it works</a></li>
+      </ul>
 
-    <a href="#download-module" class="nav__cta">Get Started</a>
-  </nav>
+      <a href="#download-module" class="nav__cta">Get Started</a>
 
-  <main>
-    <!-- ===== HERO ===== -->
-    <section class="hero" id="hero">
-      <h1 class="hero__title">
-        Download from
-        <span class="hero__title--gradient">Instagram</span>
+      <button type="button" class="nav__burger" id="nav-burger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+        <span class="nav__burger-line"></span>
+        <span class="nav__burger-line"></span>
+        <span class="nav__burger-line"></span>
+      </button>
+    </nav>
+
+    <div class="mobile-drawer" id="mobile-menu" role="dialog" aria-label="Menu" aria-modal="true" aria-hidden="true">
+      <button type="button" class="mobile-drawer__close" id="mobile-close" aria-label="Close menu">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M6 6l12 12M18 6L6 18" stroke-linecap="round"/>
+        </svg>
+      </button>
+      <ul class="mobile-drawer__list" role="list">
+        <li><a href="#hero">Home</a></li>
+        <li><a href="#fetch-engine">Features</a></li>
+        <li><a href="#how-it-works">How it works</a></li>
+      </ul>
+      <a href="#download-module" class="mobile-drawer__cta" id="mobile-drawer-cta">Get Started</a>
+    </div>
+    <div class="mobile-backdrop" id="mobile-backdrop" aria-hidden="true"></div>
+  </header>
+
+  <main id="main-content">
+    <section class="hero" id="hero" aria-labelledby="hero-title">
+      <div class="hero__badge">
+        <span class="hero__badge-dot" aria-hidden="true"></span>
+        <span class="hero__badge-text">NEW: INSTAFETCH 2.0 RELEASED</span>
+      </div>
+
+      <h1 class="hero__title" id="hero-title">
+        Download <span class="text-gradient">Instagram</span> Content Instantly
       </h1>
 
       <p class="hero__sub">
-        Experience the magic of instant media transformation. High-quality
-        downloads for Reels, Photos, and Stories in a single click.
+        Fetch reels, posts, and clips at full quality in seconds. No account required — your links stay private and nothing is stored on our servers.
       </p>
 
-      <!-- ===== DOWNLOAD MODULE (inline with hero) ===== -->
-      <div class="download-row" id="download-module">
-        <div class="input-wrap">
-          <!-- Instagram icon -->
-          <svg class="input-icon" viewBox="0 0 24 24" fill="none">
-            <rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" stroke-width="1.8"/>
-            <circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="1.8"/>
-            <circle cx="17.5" cy="6.5" r="1.2" fill="currentColor"/>
-          </svg>
-          <input
-            type="url"
-            id="insta-link"
-            class="input-field"
-            placeholder="Paste URL here…"
-            autocomplete="off"
-            spellcheck="false"
-          />
+      <div class="dl-module" id="download-module">
+        <div class="dl-module__shell" id="dl-shell">
+          <div class="dl-input-row">
+            <div class="dl-input-wrap">
+              <span class="dl-input-icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+                  <path d="M10 13a5 5 0 100-10 5 5 0 000 10z" stroke-linecap="round"/>
+                  <path d="M21 21l-4.35-4.35" stroke-linecap="round"/>
+                </svg>
+              </span>
+              <input
+                type="url"
+                id="insta-link"
+                class="dl-input"
+                placeholder="Paste Instagram link here (e.g., instagram.com/reels/...)"
+                autocomplete="off"
+                spellcheck="false"
+                inputmode="url"
+                aria-label="Instagram URL"
+                aria-describedby="status-msg error-banner"
+              />
+              <span class="dl-paste-hint" id="paste-hint" role="status" aria-live="polite"></span>
+              <button type="button" class="dl-clear" id="input-clear" hidden aria-label="Clear input">
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M3.5 3.5l9 9M12.5 3.5l-9 9" stroke-linecap="round"/>
+                </svg>
+              </button>
+            </div>
+
+            <button type="button" class="dl-btn" id="btn-fetch" aria-label="Fetch media">
+              <span class="dl-btn__label">
+                <span class="dl-btn__text">Fetch Now</span>
+                <svg class="dl-btn__arrow" width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+                  <path d="M3 9h12M10 4l5 5-5 5"/>
+                </svg>
+              </span>
+              <span class="dl-btn__loader" id="btn-loader" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                  <circle cx="12" cy="12" r="9" stroke-dasharray="28 28" stroke-linecap="round"/>
+                </svg>
+              </span>
+            </button>
+          </div>
+
+          <div class="error-banner" id="error-banner" role="alert" aria-live="assertive" hidden>
+            <span class="error-banner__icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M12 8v5M12 16h.01" stroke-linecap="round"/>
+              </svg>
+            </span>
+            <p class="error-banner__text" id="error-banner-text"></p>
+            <button type="button" class="error-banner__dismiss" id="error-dismiss" aria-label="Dismiss error">×</button>
+          </div>
+
+          <p class="dl-status" role="status" aria-live="polite">
+            <span class="dl-status__text" id="status-msg"></span>
+          </p>
         </div>
 
-        <button class="btn-download-main" id="btn-fetch" onclick="fetchMedia()">
-          <span class="btn-text">Download</span>
-          <svg class="btn-arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="4" y1="10" x2="16" y2="10"/>
-            <polyline points="11 5 16 10 11 15"/>
-          </svg>
-          <span class="btn-loader" id="btn-loader">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-              <circle cx="12" cy="12" r="10" stroke-dasharray="31.4 31.4" stroke-linecap="round"/>
-            </svg>
-          </span>
-        </button>
+        <p class="dl-terms">By using this service you agree to our <a href="#">Terms of Service</a>.</p>
       </div>
-
-      <!-- Feature chips -->
-      <div class="chips">
-        <span class="chip">⚡ AI Quality</span>
-        <span class="chip">🚫 No Watermark</span>
-        <span class="chip">🎁 Free Forever</span>
-      </div>
-
-      <!-- Status message -->
-      <p class="status-msg" id="status-msg"></p>
     </section>
 
-    <!-- ===== PREVIEW SECTION ===== -->
-    <section class="preview" id="preview">
-      <div class="preview__card" id="preview-card">
-        <div class="preview__media">
-          <video id="preview-video" controls playsinline></video>
-          <img id="preview-image" alt="Instagram media preview" />
-        </div>
+    <section class="preview-section" id="result-preview" aria-label="Download result" data-visible="false">
+      <div class="preview-section__inner">
+        <article class="result-card" id="result-card">
+          <div class="result-card__thumb" id="result-thumb">
+            <div class="result-card__thumb-placeholder" id="thumb-placeholder">
+              <span class="result-card__play" aria-hidden="true">
+                <svg width="44" height="44" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M8 5v14l11-7L8 5z"/>
+                </svg>
+              </span>
+            </div>
+            <video id="preview-video" class="result-card__media" playsinline controls hidden></video>
+            <img id="preview-image" class="result-card__media" alt="Fetched Instagram media" hidden />
+          </div>
+          <div class="result-card__body">
+            <p class="result-card__ready" id="result-ready-label">Ready to Download</p>
+            <ul class="result-card__meta" id="result-meta" aria-label="File details">
+              <li><span class="result-card__meta-k">Format</span> <span id="meta-format">MP4</span></li>
+              <li><span class="result-card__meta-k">Resolution</span> <span id="meta-resolution">HD</span></li>
+              <li><span class="result-card__meta-k">Size</span> <span id="meta-size">—</span></li>
+            </ul>
+            <div class="result-card__actions">
+              <a class="btn-primary" id="btn-save" href="#" role="button">Download HD</a>
+              <button type="button" class="btn-secondary" id="btn-copy-link">Copy Link</button>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
 
-        <a class="btn-save" id="btn-save">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-            <polyline points="7 10 12 15 17 10"/>
-            <line x1="12" y1="15" x2="12" y2="3"/>
-          </svg>
-          Save to Device
-        </a>
+    <section class="split-section" id="fetch-engine" aria-labelledby="fetch-engine-title">
+      <div class="split-section__grid">
+        <div class="phone-mock" aria-hidden="true">
+          <div class="phone-mock__frame">
+            <div class="phone-mock__notch"></div>
+            <div class="phone-mock__screen">
+              <div class="phone-mock__card">
+                <div class="phone-mock__thumb">
+                  <span class="phone-mock__play">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7L8 5z"/></svg>
+                  </span>
+                </div>
+                <p class="phone-mock__label">Ready to Download</p>
+                <p class="phone-mock__file">MP4 · 1080p · ~12 MB</p>
+                <span class="phone-mock__btn">Download HD</span>
+                <span class="phone-mock__btn phone-mock__btn--ghost">Copy Link</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="split-section__content">
+          <h2 class="section-heading" id="fetch-engine-title">
+            Ultra-Fast <span class="text-gradient">Fetch Engine</span>
+          </h2>
+          <p class="section-lead">
+            Our Synthetic Ether pipeline pulls the best CDN edge for each link — so previews and downloads start fast, stay stable, and look sharp on every device.
+          </p>
+          <div class="mini-cards">
+            <div class="mini-card">
+              <div class="mini-card__icon mini-card__icon--purple" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div>
+                <h3 class="mini-card__title">High-Speed CDN</h3>
+                <p class="mini-card__text">Routes each request to the nearest healthy node.</p>
+              </div>
+            </div>
+            <div class="mini-card">
+              <div class="mini-card__icon mini-card__icon--blue" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <rect x="3" y="4" width="18" height="14" rx="2"/>
+                  <path d="M7 20h10" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div>
+                <h3 class="mini-card__title">Max Resolution</h3>
+                <p class="mini-card__text">Prefers the highest bitrate the source exposes.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="steps-section" id="how-it-works" aria-labelledby="steps-title">
+      <h2 class="section-heading section-heading--center" id="steps-title">
+        Three Steps to <span class="text-gradient">Freedom</span>
+      </h2>
+      <div class="steps-grid">
+        <article class="step-card">
+          <span class="step-card__num" aria-hidden="true">01</span>
+          <div class="step-card__icon-wrap" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <rect x="4" y="4" width="16" height="16" rx="2"/>
+              <path d="M8 10h8M8 14h5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h3 class="step-card__title">Paste Link</h3>
+          <p class="step-card__text">Copy any public Instagram URL and drop it into the fetch bar.</p>
+        </article>
+        <article class="step-card">
+          <span class="step-card__num" aria-hidden="true">02</span>
+          <div class="step-card__icon-wrap" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h3 class="step-card__title">Fetch Now</h3>
+          <p class="step-card__text">We resolve the media, normalize quality, and prep a secure preview.</p>
+        </article>
+        <article class="step-card">
+          <span class="step-card__num" aria-hidden="true">03</span>
+          <div class="step-card__icon-wrap" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M12 3v12l4-4M5 21h14" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h3 class="step-card__title">Download HD</h3>
+          <p class="step-card__text">Save to your device or copy the direct link — your choice.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="perf-section" id="performance" aria-labelledby="perf-title">
+      <div class="perf-section__grid">
+        <div class="perf-section__intro">
+          <h2 class="section-heading" id="perf-title">
+            Engineered for <span class="text-gradient">Performance</span>
+          </h2>
+          <p class="section-lead">
+            Built for reliability at scale — lightweight client, efficient fetches, and clear feedback when something goes wrong.
+          </p>
+          <p class="perf-stat" aria-label="Monthly successful fetches">10M+ <span>successful fetches monthly</span></p>
+        </div>
+        <div class="perf-cards">
+          <article class="perf-card">
+            <div class="perf-card__icon perf-card__icon--purple" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <rect x="5" y="11" width="14" height="10" rx="2"/>
+                <path d="M12 15v2M8 11V7a4 4 0 018 0v4" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <h3 class="perf-card__title">No Login Required</h3>
+            <p class="perf-card__text">Paste a link and go. No Instagram credentials stored.</p>
+          </article>
+          <article class="perf-card">
+            <div class="perf-card__icon perf-card__icon--blue" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <rect x="2" y="4" width="20" height="14" rx="2"/>
+                <path d="M8 21h8" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <h3 class="perf-card__title">HD Quality Only</h3>
+            <p class="perf-card__text">We target the best available stream for each asset.</p>
+          </article>
+          <article class="perf-card">
+            <div class="perf-card__icon perf-card__icon--purple" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M12 3l7 4v5c0 5-3.5 9-7 10-3.5-1-7-5-7-10V7l7-4z" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h3 class="perf-card__title">Safe &amp; Anonymous</h3>
+            <p class="perf-card__text">Sessions are ephemeral; we don’t sell your activity.</p>
+          </article>
+          <article class="perf-card">
+            <div class="perf-card__icon perf-card__icon--blue" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4.5 16.5l2-6.5L14 3l2 6-6 2-5.5 5.5z"/>
+                <path d="M13 6l3 3"/>
+                <path d="M9.5 17.5L7 20"/>
+              </svg>
+            </div>
+            <h3 class="perf-card__title">Infinite Limits</h3>
+            <p class="perf-card__text">No arbitrary daily caps on fair public use.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-section" aria-labelledby="cta-title">
+      <div class="cta-card">
+        <h2 class="cta-card__title" id="cta-title">Start Fetching Now</h2>
+        <p class="cta-card__sub">Experience the fastest Instagram downloader on the planet — paste a link above and see the preview in seconds.</p>
+        <div class="cta-card__actions">
+          <a href="#download-module" class="btn-primary">Try for Free</a>
+          <a href="#" class="btn-outline">View API Documentation</a>
+        </div>
       </div>
     </section>
   </main>
 
-  <!-- Minimal footer -->
-  <footer class="foot">
-    <span class="foot__brand">InstaFetch</span>
-    <span class="foot__sep">·</span>
-    <span>Crafted for the media obsessed</span>
+  <footer class="site-footer" role="contentinfo">
+    <div class="site-footer__inner">
+      <div class="site-footer__brand">
+        <span class="site-footer__logo">InstaFetch</span>
+        <p class="site-footer__copy">&copy; <span id="footer-year"></span> InstaFetch. All rights reserved.</p>
+      </div>
+      <nav class="site-footer__nav" aria-label="Footer">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">API Status</a>
+        <a href="#">Contact</a>
+      </nav>
+    </div>
   </footer>
 
   <script src="/js/script.js"></script>
