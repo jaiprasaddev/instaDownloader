@@ -8,6 +8,7 @@ const statusMsg = document.getElementById("status-msg");
 const previewSec = document.getElementById("result-preview");
 const previewVideo = document.getElementById("preview-video");
 const previewImage = document.getElementById("preview-image");
+const resultThumb = document.getElementById("result-thumb");
 const thumbPlaceholder = document.getElementById("thumb-placeholder");
 const btnSave = document.getElementById("btn-save");
 const btnCopy = document.getElementById("btn-copy-link");
@@ -199,18 +200,43 @@ async function fetchMedia() {
 
     metaFormat.textContent = currentType === "video" ? "MP4" : "JPG";
     metaResolution.textContent = data.width && data.height ? `${data.width}×${data.height}` : "HD";
-    metaSize.textContent = data.size ? formatBytes(data.size) : "—";
+
+    let sizeBytes = typeof data.size === "number" && data.size >= 0 ? data.size : null;
+    if (sizeBytes == null) {
+      sizeBytes = await fetchSizeViaProxyHead(currentProxyUrl);
+    }
+    metaSize.textContent = sizeBytes != null ? formatBytes(sizeBytes) : "—";
+
+    if (resultThumb) {
+      resultThumb.classList.remove("result-card__thumb--video", "result-card__thumb--image");
+    }
 
     if (currentType === "video") {
-      previewVideo.src = currentProxyUrl;
-      previewVideo.hidden = false;
+      resultThumb && resultThumb.classList.add("result-card__thumb--video");
+      previewImage.removeAttribute("src");
       previewImage.hidden = true;
+      previewVideo.hidden = false;
+      previewVideo.src = currentProxyUrl;
       thumbPlaceholder.hidden = true;
+      previewVideo.addEventListener(
+        "loadedmetadata",
+        function onMeta() {
+          previewVideo.removeEventListener("loadedmetadata", onMeta);
+          if (previewVideo.videoWidth && previewVideo.videoHeight) {
+            metaResolution.textContent = `${previewVideo.videoWidth}×${previewVideo.videoHeight}`;
+          }
+        },
+        { once: true }
+      );
     } else {
-      previewImage.src = currentProxyUrl;
-      previewImage.hidden = false;
+      resultThumb && resultThumb.classList.add("result-card__thumb--image");
+      try {
+        previewVideo.pause();
+      } catch (_) {}
+      previewVideo.removeAttribute("src");
       previewVideo.hidden = true;
-      previewVideo.src = "";
+      previewImage.hidden = false;
+      previewImage.src = currentProxyUrl;
       thumbPlaceholder.hidden = true;
     }
 
@@ -230,6 +256,20 @@ function formatBytes(n) {
   if (n < 1024) return `${n} B`;
   if (n < 1024 * 1024) return `${(n / 1024).toFixed(1)} KB`;
   return `${(n / (1024 * 1024)).toFixed(1)} MB`;
+}
+
+async function fetchSizeViaProxyHead(proxyUrl) {
+  try {
+    const r = await fetch(proxyUrl, { method: "HEAD" });
+    const cl = r.headers.get("Content-Length");
+    if (cl != null && cl !== "") {
+      const n = parseInt(cl, 10);
+      if (!Number.isNaN(n) && n >= 0) return n;
+    }
+  } catch (_) {
+    /* ignore */
+  }
+  return null;
 }
 
 async function downloadBlob(proxyUrl, type) {
@@ -277,11 +317,17 @@ function showPreview() {
 function hidePreview() {
   previewSec.setAttribute("data-visible", "false");
   previewSec.setAttribute("aria-hidden", "true");
+  if (resultThumb) {
+    resultThumb.classList.remove("result-card__thumb--video", "result-card__thumb--image");
+  }
+  try {
+    previewVideo.pause();
+  } catch (_) {}
   previewVideo.hidden = true;
+  previewVideo.removeAttribute("src");
   previewImage.hidden = true;
+  previewImage.removeAttribute("src");
   thumbPlaceholder.hidden = false;
-  previewVideo.src = "";
-  previewImage.src = "";
   currentProxyUrl = "";
 }
 

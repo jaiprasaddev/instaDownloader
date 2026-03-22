@@ -18,6 +18,37 @@ app.get("/", (req, res) => {
 // ✅ ENV API KEY
 const API_KEY = process.env.API_KEY;
 
+/**
+ * Best-effort byte size from CDN (HEAD, then short GET to read headers only).
+ */
+async function fetchMediaContentLength(mediaUrl) {
+  try {
+    const r = await axios.head(mediaUrl, {
+      maxRedirects: 5,
+      timeout: 20000,
+      validateStatus: (s) => s >= 200 && s < 400,
+    });
+    const cl = r.headers["content-length"];
+    if (cl) return parseInt(String(cl), 10);
+  } catch (_) {
+    /* try GET */
+  }
+  try {
+    const r = await axios.get(mediaUrl, {
+      responseType: "stream",
+      maxRedirects: 5,
+      timeout: 20000,
+      validateStatus: (s) => s >= 200 && s < 400,
+    });
+    const cl = r.headers["content-length"];
+    if (typeof r.data?.destroy === "function") r.data.destroy();
+    if (cl) return parseInt(String(cl), 10);
+  } catch (_) {
+    /* ignore */
+  }
+  return null;
+}
+
 // ✅ DOWNLOAD ROUTE
 app.post("/download", async (req, res) => {
   const { url } = req.body;
@@ -46,10 +77,14 @@ app.post("/download", async (req, res) => {
       });
     }
 
+    const mediaUrl = media[0].media;
+    const size = await fetchMediaContentLength(mediaUrl);
+
     res.json({
       success: true,
-      url: media[0].media,
+      url: mediaUrl,
       type: media[0].isVideo ? "video" : "image",
+      ...(size != null ? { size } : {}),
     });
 
   } catch (err) {
@@ -61,7 +96,7 @@ app.post("/download", async (req, res) => {
   }
 });
 
-// ✅ PROXY
+// ✅ PROXY (GET — stream media)
 app.get("/proxy", async (req, res) => {
   const url = req.query.url;
 
@@ -75,6 +110,28 @@ app.get("/proxy", async (req, res) => {
 
   } catch {
     res.status(500).send("Proxy error");
+  }
+});
+
+// ✅ PROXY HEAD — same-origin size probe for the browser
+app.head("/proxy", async (req, res) => {
+  const url = req.query.url;
+  if (!url) {
+    return res.status(400).end();
+  }
+  try {
+    const response = await axios.head(url, {
+      maxRedirects: 5,
+      timeout: 20000,
+      validateStatus: (s) => s >= 200 && s < 400,
+    });
+    const ct = response.headers["content-type"];
+    const cl = response.headers["content-length"];
+    if (ct) res.setHeader("Content-Type", ct);
+    if (cl) res.setHeader("Content-Length", cl);
+    res.status(200).end();
+  } catch {
+    res.status(500).end();
   }
 });
 

@@ -748,6 +748,15 @@ ul[role="list"],
   background: #000;
 }
 
+/* Only one preview element visible — avoids broken <img> icon under <video> (mobile/WebKit). */
+.result-card__thumb--video img.result-card__media {
+  display: none !important;
+}
+
+.result-card__thumb--image video.result-card__media {
+  display: none !important;
+}
+
 .result-card__body {
   padding: 1.15rem 1.15rem 1.25rem;
 }
